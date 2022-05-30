@@ -1,5 +1,5 @@
 // ES5 implementation
-
+require('dotenv/config')
 const express = require('express')
 const mongo = require('mongodb').MongoClient
 const cors = require('cors')
@@ -11,7 +11,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-const url = 'mongodb+srv://admin:admin123@cluster0.osjhu.mongodb.net?retryWrites=true&w=majority'
+const url = process.env.MONGO_URL
 
 const options = { 
     useNewUrlParser: true,
@@ -35,7 +35,7 @@ mongo.connect(url, options, (err, mongoClient) => {
         return
     }
     app.listen(PORT, () => {
-        console.log(`http://localhost${PORT}`)
+        console.log(`http://localhost:${PORT}`)
     })
 
     const db = mongoClient.db('restaurant')         // create/connect to our restaurant database 
